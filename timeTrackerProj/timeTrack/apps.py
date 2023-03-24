@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class TimeTrackerConfig(AppConfig):
+class TimetrackConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'time_tracker'
+    name = 'timeTrack'
