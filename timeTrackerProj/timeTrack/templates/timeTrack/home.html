@@ -1,0 +1,39 @@
+{% extends 'timeTrack/base.html' %} {% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="row">
+        <div class="col">
+          <h1>Anchit's Work Log</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Time Worked</th>
+                <th scope="col">Clock In</th>
+                <th scope="col">Clock Out</th>
+                <th scope="col">Break Length</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for log in logs%}
+              <tr>
+                <th scope="row">{{ log.date_of_work }}</th>
+                <td>{{ log.time_worked }}</td>
+                <td>{{ log.start_time|time:"H:i" }}</td>
+                <td>@{{ log.end_time|time:"H:i" }}</td>
+                <td>{{ log.break_length }}</td>
+              </tr>
+              {%endfor%}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content%}
