@@ -32,6 +32,19 @@ class Times(models.Model):
             return f"{hrs_worked}:{mins_worked}"
         else:
             return 'Incomplete'
+    
+    @property
+    def time_worked_str(self):
+        """
+        Fn to get time worked as string
+        """
+        if self.time_worked != 'Incomplete':
+            time_str = str(self.time_worked).split(':')
+            time_str_hr = time_str[0]
+            time_str_min = time_str[1]
+            return f"{time_str_hr}hrs {time_str_min}mins"
+        else:
+            return f"Incomplete"
 
     def __str__(self):
         return f"{self.date_of_work} (hrs worked: {self.time_worked})"

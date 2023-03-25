@@ -9,7 +9,12 @@
       </div>
       <div class="row">
         <div class="col">
-          <table class="table">
+            <a class="btn btn-primary" href="{% url 'addTime' %}">Add Time</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <table class="table table-hover">
             <thead>
               <tr>
                 <th scope="col">Date</th>
@@ -23,9 +28,9 @@
               {% for log in logs%}
               <tr>
                 <th scope="row">{{ log.date_of_work }}</th>
-                <td>{{ log.time_worked }}</td>
+                <td>{{ log.time_worked_str }}</td>
                 <td>{{ log.start_time|time:"H:i" }}</td>
-                <td>@{{ log.end_time|time:"H:i" }}</td>
+                <td>{{ log.end_time|time:"H:i" }}</td>
                 <td>{{ log.break_length }}</td>
               </tr>
               {%endfor%}
