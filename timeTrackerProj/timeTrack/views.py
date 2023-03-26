@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.urls import reverse, reverse_lazy
 
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
@@ -19,6 +20,6 @@ class TimeListView(ListView):
 class AddTimeView(CreateView):
     
     model = Times
-    # fields = '__all__'
     template_name = 'timeTrack/time-add.html'
     form_class = TimeCreateForm
+    success_url = reverse_lazy('index')
