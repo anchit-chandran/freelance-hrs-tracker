@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
 
 from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 
 from timeTrack.models import Times
 
@@ -21,5 +21,12 @@ class AddTimeView(CreateView):
     
     model = Times
     template_name = 'timeTrack/time-add.html'
+    form_class = TimeCreateForm
+    success_url = reverse_lazy('index')
+
+class UpdateTimeView(UpdateView):
+    
+    model = Times
+    template_name = 'timeTrack/time-update.html'
     form_class = TimeCreateForm
     success_url = reverse_lazy('index')
