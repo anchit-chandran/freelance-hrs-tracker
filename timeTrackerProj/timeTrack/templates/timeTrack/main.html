@@ -1,0 +1,54 @@
+{% extends 'timeTrack/home.html' %}
+
+{% block forms %}
+<div class="row">
+  <div class="col d-flex justify-content-center align-items-center my-4">
+    <a class="btn btn-primary" href="{% url 'addTime' %}">Add Time</a>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <table class="table table-hover table-sm">
+      <thead>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Time Worked</th>
+          <th scope="col">Clock In</th>
+          <th scope="col">Clock Out</th>
+          <th scope="col">Break Length</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for log in logs%}
+        <tr>
+          <th scope="row">{{ log.date_of_work }}</th>
+          <td>
+            {% if log.time_worked_str == 'Incomplete' %}
+            <p class="bg-danger text-white">{{ log.time_worked_str }}</p>
+            {% else %}
+            <p class="">{{ log.time_worked_str }}</p>
+            {% endif %}
+          </td>
+          <td>{{ log.start_time|time:"H:i" }}</td>
+          <td>{{ log.end_time|time:"H:i" }}</td>
+          <td>
+            <span>{{ log.break_length }}</span>
+          </td>
+          <td>
+            <span>
+              <a href="{% url 'updateTime' pk=log.id %}" class="btn btn-info"
+                >Edit</a
+              >
+              <a href="{% url 'deleteTime' pk=log.id %}" class="btn btn-danger"
+                >Delete</a
+              >
+            </span>
+          </td>
+        </tr>
+        {%endfor%}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock forms %}
