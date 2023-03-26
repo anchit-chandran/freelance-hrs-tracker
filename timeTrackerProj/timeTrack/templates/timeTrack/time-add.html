@@ -1,14 +1,46 @@
-{% extends 'timeTrack/home.html' %}
-
-{% block forms %}
+{% extends 'timeTrack/home.html' %} {% block forms %}
 <div class="row">
-    <div class="col">
-      <h1>Add Time</h1>
-        <form method="post">
-          {% csrf_token %}
-          {{ form.as_p }}
-          <input type="submit" value="Log time" />
-        </form>
-    </div>
+  <div class="col d-flex flex-column justify-content-center align-items-center">
+    <h3>Log entry below</h3>
+
+    <form method="post" class="py-3 my-3">
+      {% csrf_token %} {{ form.non_field_errors }}
+
+      <div class="fieldWrapper row">
+        {{ form.date_of_work.errors }}
+        <div class="col">
+          <label class="form-label" for="{{ form.date_of_work.id_for_label }}"
+            >Date of work:</label
+          >
+        </div>
+        <div class="col">{{ form.date_of_work }}</div>
+      </div>
+      <div class="fieldWrapper row">
+        {{ form.start_time.errors }}
+        <div class="col">
+          <label class="form-label" for="{{ form.start_time.id_for_label }}">Start time:</label>
+        </div>
+        <div class="col">{{ form.start_time }}</div>
+      </div>
+      <div class="fieldWrapper row">
+        {{ form.end_time.errors }}
+        <div class="col">
+          <label class="form-label" for="{{ form.end_time.id_for_label }}">End time:</label>
+        </div>
+        <div class="col">{{ form.end_time }}</div>
+      </div>
+      <div class="fieldWrapper row">
+        {{ form.break_length.errors }}
+        <div class="col">
+          <label class="form-label" for="{{ form.break_length.id_for_label }}"
+            >Break length:</label
+          >
+        </div>
+        <div class="col">{{ form.break_length }}</div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Log hours</button>
+    </form>
+  </div>
 </div>
 {% endblock forms %}
