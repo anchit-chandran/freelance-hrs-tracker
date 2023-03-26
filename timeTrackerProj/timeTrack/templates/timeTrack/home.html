@@ -31,7 +31,13 @@
                 <td>{{ log.time_worked_str }}</td>
                 <td>{{ log.start_time|time:"H:i" }}</td>
                 <td>{{ log.end_time|time:"H:i" }}</td>
-                <td>{{ log.break_length }}</td>
+                <td>
+                  <span>{{ log.break_length }}</span>
+                  <span>
+                    <a href="#" class="btn btn-info">⚙</a>
+                    <a href="#" class="btn btn-danger"></a>
+                  </span>
+                </td>
               </tr>
               {%endfor%}
             </tbody>
