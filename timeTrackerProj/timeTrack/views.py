@@ -25,19 +25,21 @@ class TimeListView(ListView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
 
-        # Calculate total hrs as float
-        total_hrs_dict = Times.objects.annotate(shift_length=ExpressionWrapper(
-            F('end_time') - F('start_time'),
-            output_field=DurationField()
-        )).aggregate(total_hrs=Sum('shift_length'))
+        # check if ang logs exist
+        if Times.objects.all().exists():
+            # Calculate total hrs as float
+            total_hrs_dict = Times.objects.annotate(shift_length=ExpressionWrapper(
+                F('end_time') - F('start_time'),
+                output_field=DurationField()
+            )).aggregate(total_hrs=Sum('shift_length'))
 
-        # convert into total hours
-        total_hrs = total_hrs_dict['total_hrs'].total_seconds() / 3600
-        context['total_hrs'] = total_hrs
-        
-        #convert into total earned
-        rate_ph = 25
-        context['total_earned'] = round(total_hrs * rate_ph, 2)
+            # convert into total hours
+            total_hrs = total_hrs_dict['total_hrs'].total_seconds() / 3600
+            context['total_hrs'] = total_hrs
+            
+            #convert into total earned
+            rate_ph = 25
+            context['total_earned'] = round(total_hrs * rate_ph, 2)
         
         return context
 
