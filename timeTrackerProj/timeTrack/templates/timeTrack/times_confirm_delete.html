@@ -1,12 +1,18 @@
-{% extends 'timeTrack/base.html' %} {% block content %}
+
+
+{% extends 'timeTrack/home.html' %} 
+{% block forms %}
 <div class="row">
-    <div class="col">
-      <h1>Are you sure you want to delete this entry?</h1>
-        <form method="post">
-          {% csrf_token %}
-          {{ object }}
-          <input type="submit" value="Yes, I'm sure" />
-        </form>
-    </div>
+  <div class="col d-flex flex-column justify-content-center align-items-center">
+    <h3>Are you sure you want to delete this entry?</h3>
+
+    <form method="post" class="py-3 my-3">
+      {% csrf_token %}
+        {{ object }}
+        <a href="{% url 'index' %}" class="btn btn-info">No, go back</a>
+      <button type="submit" class="btn btn-danger">Yes, I'm sure</button>
+    </form>
+  </div>
 </div>
-{% endblock content %}
+{% endblock forms %}
+
