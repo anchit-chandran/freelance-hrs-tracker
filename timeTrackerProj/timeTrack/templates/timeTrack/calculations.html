@@ -1,0 +1,31 @@
+<h3>Calculations</h3>
+
+<p>Gross Income:</p>
+<p>Rate (£25/hour) x Total hours ({{total_hrs}})</p>
+<p class="text-end">= £ {{total_earned}}</p>
+<hr />
+<p>Minus Expenses:</p>
+<p class="text-end expense">= £ (250)</p>
+<hr />
+<p>Taxable Profit:</p>
+<p class="text-end end-calc-step">= £ {{total_earned|add:"-250"}}</p>
+<hr />
+<p>Taxes</p>
+<ul>
+  <li>
+    <p class="expense">20% Tax: £x</p>
+  </li>
+  <li>
+    <p class="expense">Class 4 @ 9%: £x</p>
+  </li>
+  <li>
+    <p class="expense">Class 2 NI: £x</p>
+  </li>
+  <li>
+    <p>Tax free amount: £12,500 / 12</p>
+  </li>
+</ul>
+<p class="text-end expense">=Total tax: £ (x)</p>
+<hr />
+<p>Proft after tax</p>
+<p class="text-end end-calc-step">£ 1202013</p>

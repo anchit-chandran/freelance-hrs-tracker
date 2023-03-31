@@ -1,4 +1,33 @@
+:root {
+    --black: #141414;
+    --white: #ffffff;
+    --red: #ff0000;
+  }
+
+body {
+    /* background-color: var(--black); */
+}
+
+h1,h2,h3,h4,h5,h6,p,a,button {
+    /* color: var(--white); */
+}
+
+/* nav stylings */
+nav .navbar a.navbar-brand {
+    /* color:var(--white); */
+}
+
 .contents-col {
     border: 1px solid black;
     min-height: 55vh;
+}
+
+/* calculations */
+.expense {
+    color: var(--red);
+    font-style: italic;
+}
+
+.end-calc-step {
+    font-weight: bold;
 }

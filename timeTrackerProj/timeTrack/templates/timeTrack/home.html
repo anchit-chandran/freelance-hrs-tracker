@@ -1,6 +1,6 @@
-x{% extends 'timeTrack/base.html' %} {% block content %}
+{% extends 'timeTrack/base.html' %} {% block content %}
 
-<div class="row justify-content-center align-items-center p-md-5 vh-100">
+<div class="row justify-content-center align-items-center p-md-5">
   <div class="col col-md-8 contents-col p-3">
     <div class="row">
       <div class="col">
@@ -11,17 +11,17 @@ x{% extends 'timeTrack/base.html' %} {% block content %}
   </div>
   {% if total_earned %}
   <div class="col contents-col p-3 ms-3">
-      <div class="row">
-        <div class="col text-center">
-          <h3>Total earned:</h3>
-          <h3>£{{total_earned}} ({{total_hrs}}hrs)</h3>
-        </div>
+    <div class="row">
+      <div class="col text-center">
+        <h3>Total earned:</h3>
+        <h3>£{{total_earned}} ({{total_hrs}}hrs)</h3>
       </div>
-      <div class="row mt-4">
-        <div class="col text-start">
-          <h3>Calculations</h3>
-        </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col text-start">
+        {% include 'timeTrack/calculations.html' %}
       </div>
+    </div>
   </div>
   {% endif %}
 </div>
