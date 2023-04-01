@@ -9,12 +9,12 @@
     </div>
     {% block forms %} {% endblock forms %}
   </div>
-  {% if total_earned %}
+  {% if takehome %}
   <div class="col contents-col p-3 ms-3">
     <div class="row">
       <div class="col text-center">
         <h3>Total earned:</h3>
-        <h3>£{{total_earned}} ({{total_hrs}}hrs)</h3>
+        <h3>£{{takehome.take_home}} ({{total_hrs}}hrs)</h3>
       </div>
     </div>
     <div class="row mt-4">

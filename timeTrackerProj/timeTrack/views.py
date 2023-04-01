@@ -1,6 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
+
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.db.models import Sum, DurationField, ExpressionWrapper, F
 
@@ -9,10 +12,14 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from timeTrack.models import Times
 
-from timeTrack.forms import TimeCreateForm
+from timeTrack.forms import TimeCreateForm, RegisterForm
 
+from timeTrack.calculate_tax import calculate_takehome
 
-class TimeListView(ListView):
+class TimeListView(LoginRequiredMixin, ListView):
+    
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
 
     model = Times
     template_name = 'timeTrack/main.html'
@@ -32,19 +39,17 @@ class TimeListView(ListView):
                 F('end_time') - F('start_time'),
                 output_field=DurationField()
             )).aggregate(total_hrs=Sum('shift_length'))
-
+            
             # convert into total hours
             total_hrs = total_hrs_dict['total_hrs'].total_seconds() / 3600
             context['total_hrs'] = total_hrs
             
-            #convert into total earned
-            rate_ph = 25
-            context['total_earned'] = round(total_hrs * rate_ph, 2)
+            context['takehome'] = calculate_takehome(total_hrs=158)
         
         return context
 
 
-class AddTimeView(CreateView):
+class AddTimeView(LoginRequiredMixin, CreateView):
 
     model = Times
     template_name = 'timeTrack/time-add.html'
@@ -52,7 +57,7 @@ class AddTimeView(CreateView):
     success_url = reverse_lazy('index')
 
 
-class UpdateTimeView(UpdateView):
+class UpdateTimeView(LoginRequiredMixin, UpdateView):
 
     model = Times
     template_name = 'timeTrack/time-update.html'
@@ -60,7 +65,22 @@ class UpdateTimeView(UpdateView):
     success_url = reverse_lazy('index')
 
 
-class DeleteTimeView(DeleteView):
+class DeleteTimeView(LoginRequiredMixin, DeleteView):
 
     model = Times
     success_url = reverse_lazy('index')
+
+def sign_up(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect(reverse('index'))
+    else:
+        form = RegisterForm()
+    return render(request, 'registration/sign-up.html', context={'form':form})
+
+def signout(request):
+    logout(request)
+    return redirect(reverse('login'))
