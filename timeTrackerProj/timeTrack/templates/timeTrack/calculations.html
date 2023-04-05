@@ -1,3 +1,5 @@
+{% extends 'timeTrack/home.html' %} {% block forms %}
+
 <h3>Calculations</h3>
 
 <p>Gross Income:</p>
@@ -13,7 +15,9 @@
 <p>Taxes</p>
 <ul>
   <li>
-    <p>Monthly personal allowance: £ {{ takehome.PERSONAL_ALLOWANCE_MONTHLY }}</p>
+    <p>
+      Monthly personal allowance: £ {{ takehome.PERSONAL_ALLOWANCE_MONTHLY }}
+    </p>
   </li>
   <li>
     <p class="expense">Income Tax @20%</p>
@@ -29,3 +33,4 @@
 <hr />
 <p>Proft after tax</p>
 <p class="text-end end-calc-step">£ {{ takehome.take_home }}</p>
+{% endblock forms %}

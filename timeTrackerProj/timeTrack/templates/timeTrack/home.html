@@ -1,28 +1,57 @@
 {% extends 'timeTrack/base.html' %} {% block content %}
 
 <div class="row justify-content-center align-items-center p-md-5">
-  <div class="col col-md-8 contents-col p-3">
+  <div class="row justify-content-center align-items-center summary_wrapper">
+    <div class="col-md-4">
+      <div class="card border-dark mb-3">
+        <div class="card-header"><a href="{% url 'viewCalculations' %}">Take home amount</a></div>
+        <div class="card-body">
+          <h5 class="card-title text-center">£ {{ takehome.take_home }}</h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card-group">
+        <div class="card border-dark mb-3">
+          <div class="card-header"><a href="{% url 'viewCalculations' %}">Revenue</a></div>
+          <div class="card-body">
+            <h5 class="card-title text-center">£ {{ takehome.gross_income }} </h5>
+          </div>
+        </div>
+        <div class="card border-dark mb-3">
+          <div class="card-header"><a href="{% url 'viewCalculations' %}">Expenses</a></div>
+          <div class="card-body">
+            <h5 class="card-title text-center expense">£ {{takehome.EXPENSES}} </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card-group">
+        <div class="card border-dark mb-3">
+          <div class="card-header"><a href="{% url 'viewCalculations' %}">Tax</a></div>
+          <div class="card-body">
+            <h5 class="card-title text-center">£ {{ takehome.tax_amount }}</h5>
+          </div>
+        </div>
+        <div class="card border-dark mb-3">
+          <div class="card-header"><a href="{% url 'viewCalculations' %}">NI</a></div>
+          <div class="card-body">
+            <h5 class="card-title text-center">£ XXX</h5>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row">
-      <div class="col">
-        <h1 class="text-center py-3">Anchit's Work Log</h1>
-      </div>
-    </div>
-    {% block forms %} {% endblock forms %}
-  </div>
-  {% if takehome %}
-  <div class="col contents-col p-3 ms-3">
-    <div class="row">
-      <div class="col text-center">
-        <h3>Total earned:</h3>
-        <h3>£{{takehome.take_home}} ({{total_hrs}}hrs)</h3>
-      </div>
-    </div>
-    <div class="row mt-4">
-      <div class="col text-start">
-        {% include 'timeTrack/calculations.html' %}
+      <div class="col contents-col p-md-3">
+        <div class="row">
+          <div class="col">
+            <h1 class="text-center py-3">Anchit's Work Log</h1>
+          </div>
+        </div>
+        {% block forms %} {% endblock forms %}
       </div>
     </div>
   </div>
-  {% endif %}
+  {% endblock content%}
 </div>
-{% endblock content%}

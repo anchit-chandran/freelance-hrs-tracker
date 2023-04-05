@@ -16,8 +16,9 @@ from timeTrack.forms import TimeCreateForm, RegisterForm
 
 from timeTrack.calculate_tax import calculate_takehome
 
+
 class TimeListView(LoginRequiredMixin, ListView):
-    
+
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
 
@@ -39,14 +40,37 @@ class TimeListView(LoginRequiredMixin, ListView):
                 F('end_time') - F('start_time'),
                 output_field=DurationField()
             )).aggregate(total_hrs=Sum('shift_length'))
-            
+
             # convert into total hours
             total_hrs = total_hrs_dict['total_hrs'].total_seconds() / 3600
+
             context['total_hrs'] = total_hrs
-            
+
             context['takehome'] = calculate_takehome(total_hrs=158)
-        
+
         return context
+
+
+def viewCalculations(request):
+    
+    default_calc_str = 'No calculations!'
+    total_hrs = default_calc_str
+    takehome = default_calc_str
+
+    # check if ang logs exist
+    if Times.objects.all().exists():
+        # Calculate total hrs as float
+        total_hrs_dict = Times.objects.annotate(shift_length=ExpressionWrapper(
+            F('end_time') - F('start_time'),
+            output_field=DurationField()
+        )).aggregate(total_hrs=Sum('shift_length'))
+
+        # convert into total hours
+        total_hrs = total_hrs_dict['total_hrs'].total_seconds() / 3600
+        
+        takehome = calculate_takehome(total_hrs=158)
+        
+    return render(request, template_name='timeTrack/calculations.html', context={'total_hr' : total_hrs, 'takehome':takehome})
 
 
 class AddTimeView(LoginRequiredMixin, CreateView):
@@ -70,6 +94,7 @@ class DeleteTimeView(LoginRequiredMixin, DeleteView):
     model = Times
     success_url = reverse_lazy('index')
 
+
 def sign_up(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -79,7 +104,8 @@ def sign_up(request):
             return redirect(reverse('index'))
     else:
         form = RegisterForm()
-    return render(request, 'registration/sign-up.html', context={'form':form})
+    return render(request, 'registration/sign-up.html', context={'form': form})
+
 
 def signout(request):
     logout(request)

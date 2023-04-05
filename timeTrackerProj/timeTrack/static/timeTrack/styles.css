@@ -23,7 +23,7 @@ nav .navbar a.navbar-brand {
 }
 
 /* calculations */
-p.expense {
+.expense {
     color: var(--red);
     font-style: italic;
 }
